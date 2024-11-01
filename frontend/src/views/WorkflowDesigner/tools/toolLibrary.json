@@ -1,0 +1,890 @@
+{
+  "triggers": [
+    {
+      "title": "Receive Email",
+      "category": "trigger",
+      "type": "receive-email",
+      "icon": "inbox",
+      "description": "This trigger node listens for incoming emails and triggers the workflow when a new email is received. Returns the received email details like from address, subject, body, etc.",
+      "parameters": {
+        "emailAddress": {
+          "type": "string",
+          "inputType": "readonly",
+          "value": "workflow-{{WORKFLOWID}}@{{IMAP_EMAIL_DOMAIN}}",
+          "description": "The email address to monitor for incoming emails"
+        }
+      },
+      "outputs": {
+        "from": {
+          "type": "string",
+          "description": "The sender's email address"
+        },
+        "to": {
+          "type": "string",
+          "description": "This workflow email address"
+        },
+        "subject": {
+          "type": "string",
+          "description": "The subject of the received email"
+        },
+        "body": {
+          "type": "string",
+          "description": "The body content of the received email"
+        },
+        "attachments": {
+          "type": "array",
+          "description": "An array of attachment objects, if any"
+        }
+      }
+    },
+    {
+      "title": "Receive Discord Message",
+      "category": "trigger",
+      "type": "receive-discord-message",
+      "icon": "discord",
+      "description": "This trigger node listens for incoming Discord messages in a specified channel and triggers the workflow when a new message is received.",
+      "parameters": {
+        "channelId": {
+          "type": "string",
+          "inputType": "text",
+          "description": "The ID of the Discord channel to monitor"
+        }
+      },
+      "outputs": {
+        "content": {
+          "type": "string",
+          "description": "The content of the message"
+        },
+        "author": {
+          "type": "string",
+          "description": "The username of the message author"
+        },
+        "timestamp": {
+          "type": "number",
+          "description": "The timestamp of when the message was created"
+        },
+        "response": {
+          "type": "object",
+          "description": "The complete raw API response as received from Slack"
+        }
+      }
+    },
+    {
+      "title": "Receive Slack Message",
+      "category": "trigger",
+      "type": "receive-slack-message",
+      "icon": "slack-receive",
+      "description": "This trigger node listens for incoming Slack messages in a specified channel and triggers the workflow when a new message is received.",
+      "parameters": {
+        "channelId": {
+          "type": "string",
+          "inputType": "text",
+          "description": "The ID of the Slack channel to monitor"
+        }
+      },
+      "outputs": {
+        "user": {
+          "type": "string",
+          "description": "The user who sent the message"
+        },
+        "text": {
+          "type": "string",
+          "description": "The content of the message"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "The timestamp of the message"
+        },
+        "response": {
+          "type": "object",
+          "description": "The complete raw API response as received from Slack"
+        }
+      }
+    },
+    {
+      "title": "Google Sheets New Row",
+      "category": "trigger",
+      "type": "google-sheets-new-row",
+      "icon": "table",
+      "description": "This trigger node listens for new rows added to a specified Google Sheet and triggers the workflow when a new row is detected.",
+      "parameters": {
+        "spreadsheetId": {
+          "type": "string",
+          "inputType": "text",
+          "description": "The ID of the Google Spreadsheet to monitor"
+        },
+        "sheetName": {
+          "type": "string",
+          "inputType": "text",
+          "description": "The name of the sheet within the spreadsheet to monitor"
+        }
+      },
+      "outputs": {
+        "newRow": {
+          "type": "object",
+          "description": "The data of the newly added row"
+        }
+      }
+    },
+    {
+      "title": "Webhook Listener",
+      "category": "trigger",
+      "type": "webhook-listener",
+      "icon": "connect",
+      "description": "This trigger node listens for incoming webhook requests and triggers the workflow when a request is received.",
+      "parameters": {
+        "webhookUrl": {
+          "type": "string",
+          "inputType": "readonly",
+          "value": "{{WEBHOOK_URL}}/webhook/{{WORKFLOWID}}",
+          "description": "The unique webhook URL for this workflow"
+        },
+        "method": {
+          "type": "string",
+          "inputType": "select",
+          "options": ["POST", "GET", "PUT", "PATCH", "DELETE"],
+          "description": "The HTTP method to accept"
+        },
+        "authType": {
+          "type": "string",
+          "inputType": "select",
+          "options": ["None", "Basic", "Bearer", "Webhook"],
+          "description": "The type of authentication"
+        },
+        "authToken": {
+          "type": "string",
+          "inputType": "text",
+          "description": "Authentication token for Bearer or Webhook authentication",
+          "conditional": {
+            "field": "authType",
+            "value": ["Bearer", "Webhook"]
+          }
+        },
+        "username": {
+          "type": "string",
+          "inputType": "text",
+          "description": "Username for Basic authentication",
+          "conditional": {
+            "field": "authType",
+            "value": "Basic"
+          }
+        },
+        "password": {
+          "type": "string",
+          "inputType": "password",
+          "description": "Password for Basic authentication",
+          "conditional": {
+            "field": "authType",
+            "value": "Basic"
+          }
+        }
+      },
+      "outputs": {
+        "method": {
+          "type": "string",
+          "description": "The HTTP method of the received request"
+        },
+        "headers": {
+          "type": "object",
+          "description": "The headers of the incoming request"
+        },
+        "body": {
+          "type": "object",
+          "description": "The body of the incoming request"
+        },
+        "query": {
+          "type": "object",
+          "description": "The query parameters of the incoming request"
+        },
+        "params": {
+          "type": "object",
+          "description": "The route parameters of the incoming request"
+        }
+      }
+    },
+    {
+      "title": "Timer Trigger",
+      "category": "trigger",
+      "type": "trigger-timer",
+      "icon": "clock",
+      "description": "This trigger node fires the workflow at specified intervals.",
+      "parameters": {
+        "schedule": {
+          "type": "string",
+          "inputType": "select",
+          "options": [
+            "Every Minute",
+            "Every 5 Minutes",
+            "Every 15 Minutes",
+            "Every 30 Minutes",
+            "Hourly",
+            "Daily",
+            "Weekly",
+            "Monthly",
+            "Custom"
+          ],
+          "description": "Select the interval for the timer"
+        },
+        "customSchedule": {
+          "type": "string",
+          "inputType": "text",
+          "description": "Enter a custom cron schedule (e.g., '0 * * * *' for every hour)",
+          "conditional": {
+            "field": "schedule",
+            "value": "Custom"
+          }
+        }
+      },
+      "outputs": {
+        "timestamp": {
+          "type": "string",
+          "description": "The timestamp when the trigger fired"
+        }
+      }
+    }
+  ],
+  "actions": [
+    {
+      "title": "Send Email",
+      "category": "action",
+      "type": "send-email",
+      "icon": "outbox",
+      "description": "This action node sends an email to a specified recipient with a customizable subject and body.",
+      "parameters": {
+        "to": {
+          "type": "string",
+          "description": "The recipient's email address"
+        },
+        "subject": {
+          "type": "string",
+          "description": "The subject of the email"
+        },
+        "body": {
+          "type": "string",
+          "inputType": "textarea",
+          "description": "The body content of the email"
+        },
+        "isHtml": {
+          "type": "boolean",
+          "description": "Whether the body content is HTML"
+        },
+        "attachments": {
+          "type": "array",
+          "inputType": "textarea",
+          "description": "An array of attachment objects"
+        }
+      },
+      "outputs": {
+        "success": {
+          "type": "boolean",
+          "description": "Indicates whether the email was sent successfully"
+        },
+        "content": {
+          "type": "Object",
+          "description": "The content of the sent email"
+        },
+        "messageId": {
+          "type": "string",
+          "description": "The unique message ID of the sent email"
+        },
+        "error": {
+          "type": "null",
+          "description": "Error message if the email sending failed"
+        }
+      }
+    },
+    {
+      "title": "AI LLM Call",
+      "category": "action",
+      "type": "generate-with-ai-llm",
+      "icon": "magic",
+      "description": "This action node uses a large language model (LLM) to generate text based on a given prompt or input. Returns a generated text string & final token count integer.",
+      "parameters": {
+        "provider": {
+          "type": "string",
+          "inputType": "select",
+          "inputSize": "half",
+          "options": ["OpenAI", "Anthropic", "TogetherAI"],
+          "default": "OpenAI",
+          "description": "The name or ID of the LLM model to use"
+        },
+        "model": {
+          "type": "string",
+          "inputType": "select",
+          "inputSize": "half",
+          "options": [
+            "gpt-4o-mini",
+            "gpt-4o",
+            "claude-3-haiku-20240307",
+            "claude-3-5-sonnet-20240620",
+            "mistralai/Mixtral-8x22B-Instruct-v0.1",
+            "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo"
+          ],
+          "default": "gpt-4o-mini",
+          "description": "The name or ID of the LLM model to use"
+        },
+        "prompt": {
+          "type": "string",
+          "inputType": "textarea",
+          "description": "The input prompt or text for the LLM"
+        },
+        "maxTokens": {
+          "type": "number",
+          "inputType": "number",
+          "inputSize": "half",
+          "description": "The maximum number of tokens to generate"
+        },
+        "temperature": {
+          "type": "number",
+          "inputType": "number",
+          "inputSize": "half",
+          "description": "Controls randomness in the output (0.0 to 1.0)"
+        },
+        "image": {
+          "type": "string",
+          "inputType": "textarea",
+          "description": "Upload an image to include in the LLM call. Format: { type: file.mimetype, data: base64Data }"
+        }
+      },
+      "outputs": {
+        "generatedText": {
+          "type": "string",
+          "description": "The text generated by the LLM"
+        },
+        "tokenCount": {
+          "type": "integer",
+          "description": "The number of tokens in the generated text"
+        },
+        "error": {
+          "type": "string",
+          "description": "Error message if the LLM call failed"
+        }
+      }
+    },
+    {
+      "title": "Send Discord Message",
+      "category": "action",
+      "type": "send-discord-message",
+      "icon": "discord",
+      "description": "This action node sends a message to a specified Discord channel.",
+      "parameters": {
+        "channelId": {
+          "type": "string",
+          "inputType": "text",
+          "description": "The ID of the Discord channel to send the message to"
+        },
+        "message": {
+          "type": "string",
+          "inputType": "textarea",
+          "description": "The message to send"
+        }
+      },
+      "outputs": {
+        "success": {
+          "type": "boolean",
+          "description": "Indicates whether the message was sent successfully"
+        },
+        "messageId": {
+          "type": "string",
+          "description": "The ID of the sent message"
+        },
+        "timestamp": {
+          "type": "number",
+          "description": "The timestamp of the sent message"
+        },
+        "error": {
+          "type": "string",
+          "description": "Error message if the message sending failed"
+        }
+      }
+    },
+    {
+      "title": "Send Slack Message",
+      "category": "action",
+      "type": "send-slack-message",
+      "icon": "slack-send",
+      "description": "This action node sends a message to a specified Slack channel.",
+      "parameters": {
+        "channelId": {
+          "type": "string",
+          "inputType": "text",
+          "description": "The ID of the Slack channel to send the message to"
+        },
+        "message": {
+          "type": "string",
+          "inputType": "textarea",
+          "description": "The message to send"
+        }
+      },
+      "outputs": {
+        "success": {
+          "type": "boolean",
+          "description": "Indicates whether the message was sent successfully"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "The timestamp of the sent message"
+        },
+        "error": {
+          "type": "string",
+          "description": "Error message if the message sending failed"
+        }
+      }
+    },
+    {
+      "title": "Google Sheets",
+      "category": "action",
+      "type": "google-sheets-api",
+      "icon": "table",
+      "description": "This action node interacts with Google Sheets to read, write or modify data in a spreadsheet.",
+      "parameters": {
+        "operation": {
+          "type": "string",
+          "inputType": "select",
+          "options": ["Read", "Write", "Append", "Clear"],
+          "description": "The operation to perform on the Google Sheet"
+        },
+        "spreadsheetId": {
+          "type": "string",
+          "description": "The ID of the Google Sheet to interact with"
+        },
+        "range": {
+          "type": "string",
+          "description": "The range of cells to interact with (e.g., 'Sheet1!A1:B5')"
+        },
+        "values": {
+          "type": "array",
+          "inputType": "textarea",
+          "description": "Comma separated array of values to write or append (for write and append operations).",
+          "conditional": {
+            "field": "operation",
+            "value": ["Write", "Append"]
+          }
+        }
+      },
+      "outputs": {
+        "success": {
+          "type": "boolean",
+          "description": "Indicates whether the Google Sheets operation was successful"
+        },
+        "result": {
+          "type": "array",
+          "description": "The data returned by the Google Sheets operation (for read operations)"
+        },
+        "error": {
+          "type": "string",
+          "description": "Error message if the Google Sheets operation failed"
+        }
+      }
+    },
+    {
+      "title": "Custom API Request",
+      "category": "action",
+      "type": "custom-api",
+      "icon": "connect",
+      "description": "This action node makes a custom API request to any endpoint with configurable method, headers, and authentication.",
+      "parameters": {
+        "url": {
+          "type": "string",
+          "inputType": "text",
+          "description": "The URL of the API endpoint"
+        },
+        "method": {
+          "type": "string",
+          "inputType": "select",
+          "inputSize": "half",
+          "options": ["GET", "POST", "PUT", "DELETE", "PATCH"],
+          "description": "The HTTP method for the request"
+        },
+        "authType": {
+          "type": "string",
+          "inputType": "select",
+          "inputSize": "half",
+          "options": ["None", "Basic", "Bearer", "Webhook"],
+          "description": "The type of authentication"
+        },
+        "query": {
+          "type": "string",
+          "inputType": "text",
+          "description": "Query parameters for the request (e.g., 'key1=value1&key2=value2')"
+        },
+        "headers": {
+          "type": "string",
+          "inputType": "codearea",
+          "description": "Optional headers for the request. e.g., {\"Content-Type\": \"application/json\"}"
+        },
+        "body": {
+          "type": "object",
+          "inputType": "codearea",
+          "description": "Optional data to send with the request. Often JSON for APIs, but could be other formats depending on the API requirements.",
+          "conditional": {
+            "field": "method",
+            "value": ["POST", "PUT", "DELETE", "PATCH"]
+          }
+        },
+        "authToken": {
+          "type": "string",
+          "inputType": "text",
+          "description": "Authentication token or credentials",
+          "conditional": {
+            "field": "authType",
+            "value": ["Bearer", "Webhook"]
+          }
+        },
+        "username": {
+          "type": "string",
+          "inputType": "text",
+          "description": "Username for Basic authentication",
+          "conditional": {
+            "field": "authType",
+            "value": "Basic"
+          }
+        },
+        "password": {
+          "type": "string",
+          "inputType": "password",
+          "description": "Password for Basic authentication",
+          "conditional": {
+            "field": "authType",
+            "value": "Basic"
+          }
+        }
+      },
+      "outputs": {
+        "success": {
+          "type": "boolean",
+          "description": "Indicates whether the API request was successful"
+        },
+        "status": {
+          "type": "number",
+          "description": "The HTTP status code of the response"
+        },
+        "result": {
+          "type": "object",
+          "description": "The data returned by the API"
+        },
+        "headers": {
+          "type": "object",
+          "description": "The headers of the API response"
+        },
+        "error": {
+          "type": "string",
+          "description": "Error message if the API request failed"
+        }
+      }
+    },
+    {
+      "title": "Web Search",
+      "category": "action",
+      "type": "web-search",
+      "icon": "web",
+      "description": "This action node performs a web search using Google Custom Search API and returns the top results.",
+      "parameters": {
+        "searchQuery": {
+          "type": "string",
+          "inputType": "text",
+          "description": "The search query to be executed"
+        },
+        "numResults": {
+          "type": "text",
+          "inputType": "text",
+          "description": "The number of results to return (default: 5)",
+          "default": 3
+        },
+        "sort": {
+          "type": "string",
+          "inputType": "select",
+          "options": ["date", "relevance"],
+          "description": "Sort order for the results",
+          "default": "date"
+        }
+      },
+      "outputs": {
+        "results": {
+          "type": "array",
+          "description": "An array of search result objects"
+        },
+        "error": {
+          "type": "string",
+          "description": "Error message if the search failed"
+        }
+      }
+    }
+  ],
+  "utilities": [
+    {
+      "title": "Text Label",
+      "category": "utility",
+      "type": "label",
+      "icon": "text",
+      "description": "This utility node displays a text label in the workflow, providing additional context or information."
+    },
+    {
+      "title": "Database Operation",
+      "category": "utility",
+      "type": "database-operation",
+      "icon": "database",
+      "description": "This utility node performs database operations on user-specific data.",
+      "parameters": {
+        "operation": {
+          "type": "string",
+          "inputType": "select",
+          "options": ["SELECT", "INSERT", "UPDATE", "DELETE"],
+          "description": "The type of database operation to perform"
+        },
+        "tableName": {
+          "type": "string",
+          "inputType": "text",
+          "description": "The name of the virtual table to operate on"
+        },
+        "columns": {
+          "type": "string",
+          "inputType": "text",
+          "description": "Comma-separated list of columns (for SELECT, INSERT, UPDATE)",
+          "conditional": {
+            "field": "operation",
+            "value": ["SELECT", "INSERT", "UPDATE"]
+          }
+        },
+        "condition": {
+          "type": "string",
+          "inputType": "text",
+          "description": "WHERE clause for the operation (for SELECT, UPDATE, DELETE)",
+          "conditional": {
+            "field": "operation",
+            "value": ["SELECT", "UPDATE", "DELETE"]
+          }
+        },
+        "values": {
+          "type": "string",
+          "inputType": "textarea",
+          "description": "Comma-separated list of values (for INSERT, UPDATE)",
+          "conditional": {
+            "field": "operation",
+            "value": ["INSERT", "UPDATE", "DELETE"]
+          }
+        }
+      },
+      "outputs": {
+        "success": {
+          "type": "boolean",
+          "description": "Indicates whether the database operation was successful"
+        },
+        "result": {
+          "type": "array",
+          "description": "The data returned by the database operation (for SELECT)"
+        },
+        "affectedRows": {
+          "type": "number",
+          "description": "The number of rows affected by the operation (for INSERT, UPDATE, DELETE)"
+        },
+        "error": {
+          "type": "string",
+          "description": "Error message if the database operation failed"
+        }
+      }
+    },
+    {
+      "title": "Data Transformer",
+      "category": "utility",
+      "type": "data-transformer",
+      "icon": "transform",
+      "description": "This utility node allows you to transform and manipulate data using common transformation functions.",
+      "parameters": {
+        "input": {
+          "type": "string",
+          "inputType": "codearea",
+          "description": "The input data to be transformed"
+        },
+        "operation": {
+          "type": "string",
+          "inputType": "select",
+          "options": [
+            "Parse",
+            "Stringify",
+            "Trim",
+            "Uppercase",
+            "Lowercase",
+            "Capitalize",
+            "Replace",
+            "Split",
+            "Join",
+            "Slice",
+            "Substring",
+            "PadStart",
+            "PadEnd",
+            "Round",
+            "Floor",
+            "Ceil",
+            "ToFixed"
+          ],
+          "description": "The transformation operation to apply"
+        },
+        "arg1": {
+          "type": "string",
+          "inputType": "text",
+          "description": "First argument for the transformation",
+          "conditional": {
+            "field": "operation",
+            "value": [
+              "Replace",
+              "Split",
+              "Join",
+              "Slice",
+              "Substring",
+              "PadStart",
+              "PadEnd",
+              "ToFixed"
+            ]
+          }
+        },
+        "arg2": {
+          "type": "string",
+          "inputType": "text",
+          "description": "Second argument for the transformation",
+          "conditional": {
+            "field": "operation",
+            "value": ["Replace", "Slice", "Substring", "PadStart", "PadEnd"]
+          }
+        }
+      },
+      "outputs": {
+        "result": {
+          "type": "any",
+          "description": "The transformed data"
+        },
+        "error": {
+          "type": "string",
+          "description": "Error message if the transformation failed"
+        }
+      }
+    },
+    {
+      "title": "Execute Javascript",
+      "category": "utility",
+      "type": "execute-javascript",
+      "icon": "javascript",
+      "description": "This utility node allows you to execute custom JavaScript code within the workflow, enabling advanced logic and data transformations.",
+      "parameters": {
+        "code": {
+          "type": "string",
+          "inputType": "codearea",
+          "description": "The JavaScript code to execute"
+        }
+      },
+      "outputs": {
+        "result": {
+          "type": "any",
+          "description": "The result of the JavaScript code execution"
+        },
+        "error": {
+          "type": "string",
+          "description": "Error message if the code execution failed"
+        }
+      }
+    },
+    {
+      "title": "Execute Python",
+      "category": "utility",
+      "type": "execute-python",
+      "icon": "python",
+      "description": "This utility node allows you to execute custom Python code within the workflow, enabling advanced logic and data transformations.",
+      "parameters": {
+        "code": {
+          "type": "string",
+          "inputType": "codearea",
+          "description": "The Python code to execute"
+        }
+      },
+      "outputs": {
+        "result": {
+          "type": "any",
+          "description": "The result of the Python code execution"
+        },
+        "error": {
+          "type": "string",
+          "description": "Error message if the code execution failed"
+        }
+      }
+    }
+  ],
+  "controls": [
+    {
+      "title": "Delay",
+      "category": "utility",
+      "type": "delay",
+      "icon": "timer",
+      "description": "This utility node introduces a delay in the workflow execution.",
+      "parameters": {
+        "duration": {
+          "type": "string",
+          "inputType": "text",
+          "inputSize": "half",
+          "description": "The duration of the delay in milliseconds"
+        },
+        "unit": {
+          "type": "string",
+          "inputType": "select",
+          "inputSize": "half",
+          "options": ["milliseconds", "seconds", "minutes", "hours"],
+          "description": "The unit of time for the delay duration"
+        }
+      },
+      "outputs": {
+        "delayedUntil": {
+          "type": "string",
+          "description": "The timestamp when the delay will end"
+        }
+      }
+    },
+    {
+      "title": "Parallel Execution",
+      "category": "utility",
+      "type": "parallel-execution",
+      "icon": "flow-2",
+      "description": "This utility node executes multiple tasks in parallel.",
+      "parameters": {
+        "tasks": {
+          "type": "string",
+          "inputType": "text",
+          "description": "Comma-separated list of node ids to be executed in parallel (e.g., 'webSearch, sendEmail'). Names are case-insensitive and spaces are ignored."
+        }
+      },
+      "outputs": {
+        "results": {
+          "type": "array",
+          "description": "Array of results from parallel execution"
+        }
+      }
+    }
+  ],
+  "custom": [
+    {
+      "title": "Random Number",
+      "category": "utility",
+      "type": "random-number",
+      "icon": "dice",
+      "description": "Generates a random number within a specified range.",
+      "parameters": {
+        "min": {
+          "type": "string",
+          "inputType": "text",
+          "inputSize": "half",
+          "description": "The minimum value (inclusive)"
+        },
+        "max": {
+          "type": "string",
+          "inputType": "text",
+          "inputSize": "half",
+          "description": "The maximum value (inclusive)"
+        }
+      },
+      "outputs": {
+        "randomNumber": {
+          "type": "number",
+          "description": "The generated random number"
+        }
+      }
+    }
+  ]
+}

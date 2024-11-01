@@ -1,0 +1,38 @@
+{
+  "name": "tasktitan",
+  "version": "0.0.0",
+  "description": "Task Titan AI Chatbot Framework",
+  "main": "server.js",
+  "author": "Nathan Wilbanks",
+  "license": "Custom - See LICENSE.MD",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.16.1",
+    "@slack/bolt": "^3.21.1",
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "express-session": "^1.18.0",
+    "googleapis": "^143.0.0",
+    "imap": "^0.8.17",
+    "jsonwebtoken": "^9.0.2",
+    "mailparser": "^3.7.1",
+    "mammoth": "^1.6.0",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^6.9.14",
+    "openai": "^4.53.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "pdfreader": "3.0.2",
+    "readline": "^1.3.0",
+    "sqlite3": "^5.1.7",
+    "vm2": "^3.9.19"
+  }
+}

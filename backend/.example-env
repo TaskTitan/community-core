@@ -1,0 +1,40 @@
+# AUTH SECRETS
+JWT_SECRET=your_jwt_secret_here
+SESSION_SECRET=your_session_secret_here
+
+# AI PROVIDERS
+OPENAI_API_KEY=your_openai_api_key_here
+CLAUDE_API_KEY=your_claude_api_key_here
+TOGETHERAI_API_KEY=your_togetherai_api_key_here
+
+# GOOGLE SHEETS
+GOOGLESHEETS_CLIENT_EMAIL=your_google_sheets_client_email_here
+GOOGLESHEETS_PRIVATE_KEY=your_google_sheets_private_key_here
+
+# GOOGLE WEB SEARCH
+GOOGLE_SEARCH_API_KEY=your_google_search_api_key_here
+GOOGLE_SEARCH_ENGINE_ID=your_google_search_engine_id_here
+
+# IMAP CONFIG FOR RECEIVING EMAILS
+IMAP_USER=your_imap_user_here
+IMAP_PASS=your_imap_password_here
+IMAP_HOST=your_imap_host_here
+IMAP_PORT=993
+
+# SMTP CONFIG FOR SENDING EMAILS
+SMTP_HOST=your_smtp_host_here
+SMTP_PORT=465
+SMTP_USER=your_smtp_user_here
+SMTP_PASS=your_smtp_password_here
+
+# SLACK
+SLACK_BOT_TOKEN=your_slack_bot_token_here
+SLACK_APP_TOKEN=your_slack_app_token_here
+
+# DISCORD
+DISCORD_BOT_TOKEN=your_discord_bot_token_here
+
+# DEFAULT SERVER CONFIG
+REMOTE_URL=https://api.tasktitan.ai
+FRONTEND_DEV_URL=http://localhost:5173
+FRONTEND_DIST_URL=http://localhost:4173
