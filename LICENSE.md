@@ -1,4 +1,4 @@
-# ![Tool Forge Main Screen](/images/tt-logo-sm.png) TaskTitan.ai Community Core License
+# TaskTitan.ai Community Core License
 
 ## Simple Terms
 
