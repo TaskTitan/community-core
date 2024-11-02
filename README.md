@@ -2,6 +2,8 @@
 
 Welcome to the TaskTitan.ai developer setup guide! This guide will walk you through setting up the TaskTitan.ai Community Core app on your own machine. Let's get started! 🎉
 
+Demo Video (click to watch):
+
 [![Watch the demo video](https://tasktitan.ai/tt-demo.PNG)](https://tasktitan.ai/tt-demo.mp4)
 
 ## 📋 Prerequisites

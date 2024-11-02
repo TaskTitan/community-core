@@ -2,6 +2,8 @@
 
 Welcome, brave automator! You've just stumbled upon TaskTitan.ai, the ultimate AI-powered playground for agentic workflow wizards. Get ready to embark on an epic quest to conquer tasks and level up your efficiency!
 
+Demo Video (click to watch):
+
 [![Watch the demo video](https://tasktitan.ai/tt-demo.PNG)](https://tasktitan.ai/tt-demo.mp4)
 
 ## 🌟 Key Features and Benefits
